@@ -11,19 +11,27 @@ if taxable_income <= 18200:
 elif taxable_income >= 18201 and taxable_income <= 45000:
 	tax_rate = 0.19
 	# Tax every dollar after $18,200 at 19%
-	tax = 0 + (taxable_income - 18200) * tax_rate
+	tax = (taxable_income - 18200) * tax_rate
+	# Add the tax from the previous bracket(s)
+	tax = tax + 0
 elif taxable_income >= 45001 and taxable_income <= 120000:
 	tax_rate = 0.325
 	# Tax every dollar after $45,000 at 32.5%
-	tax = 5092 + (taxable_income - 45000) * tax_rate
+	tax = (taxable_income - 45000) * tax_rate
+	# Add the tax from the previous bracket(s)
+	tax = tax + 5092
 elif taxable_income >= 120001 and taxable_income <= 180000:
 	tax_rate = 0.37
 	# Tax every dollar after $120,000 at 37%
-	tax = 29467 + (taxable_income - 120000) * tax_rate
+	tax = (taxable_income - 120000) * tax_rate
+	# Add the tax from the previous bracket(s)
+	tax = tax + 29467
 else:
 	tax_rate = 0.45
 	# Tax every dollar after $180,000 at 45%
-	tax = 51667 + (taxable_income - 180000) * tax_rate
+	tax = (taxable_income - 180000) * tax_rate
+	# Add the tax from the previous bracket(s)
+	tax = tax + 51667
 
 remainder = taxable_income - tax
 
