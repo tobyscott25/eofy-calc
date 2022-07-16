@@ -1,9 +1,13 @@
+annual_salary = float(input("Your annual salary (e.g. \"50\" = $50,000): ")) * 1000
+salary_sacrifice = float(input("What percentage of that do you salary sacrifice? (%): "))
 
-annual_salary = float(input("Your annual salary? ($x,000 e.g. \"50\" = 50,000): ")) * 1000
-salary_sacrifice = float(input("What percentage, are you salary sacrificing before tax? (%): "))
+bills = float(input("Monthly cost on bills (e.g. rent/mortgage, utility bills, rates etc) ($): ")) * 12
+necessities = float(input("Estimated monthly cost on general necessities (e.g. groceries, hygiene products, doctor/dentist appointments, etc) ($): ")) * 12
+luxuries = float(input("Estimated monthly cost on luxuries (e.g. streaming subscriptions, eating out, etc) ($): ")) * 12
+
+
+
 taxable_income = annual_salary * (1 - salary_sacrifice / 100)
-
-
 
 if taxable_income <= 18200:
 	# Tax-free threshold
@@ -33,7 +37,6 @@ else:
 	# Add the tax from the previous bracket(s)
 	tax = tax + 51667
 
-remainder = taxable_income - tax
 
 
 
@@ -41,12 +44,22 @@ def print_report():
 
 	print('\n')
 	print('============================================================')
-	print(f'Gross annual salary: ${annual_salary}')
+	print(f'ANNUAL LIFE RECEIPT - Annual salary: ${annual_salary}')
+	print('============================================================')
+	# print(f'Gross annual salary: ${annual_salary}')
 	print('\n')
-	print(f'Salary sacrifice (pre-tax): {salary_sacrifice}% (${annual_salary - taxable_income})')
+	print(f'Salary sacrifice: {salary_sacrifice}% (-${annual_salary - taxable_income})')
 	print(f'Taxable income: ${taxable_income}')
+	print(f'Tax: -${tax}')
 	print('\n')
-	print(f'You pay ${tax}, leaving you with ${remainder}')
+	print(f'Leaving you with ${taxable_income - tax}')
+	print('\n')
+	print(f'Bills: -${bills}')
+	print(f'General necessities: -${necessities}')
+	print(f'Luxuries: -${luxuries}')
+	print('\n')
+	print(f'Leaving you with ${taxable_income - tax - bills - necessities - luxuries}')
+	print('\n')
 	print('============================================================')
 	print('\n')
 
