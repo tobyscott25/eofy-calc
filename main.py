@@ -1,3 +1,11 @@
+import os
+
+def cls():
+    os.system('cls' if os.name=='nt' else 'clear')
+
+
+cls() # Clear the screen
+
 annual_salary = float(input("Your annual salary (e.g. \"50\" = $50,000): ")) * 1000
 salary_sacrifice = float(input("What percentage of that do you salary sacrifice? (%): "))
 
@@ -41,6 +49,8 @@ else:
 
 
 def print_report():
+
+	cls() # Clear the screen
 
 	print('\n')
 	print('============================================================')
