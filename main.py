@@ -8,6 +8,7 @@ cls() # Clear the screen
 
 annual_salary = float(input("Your annual salary (e.g. \"50\" = $50,000): ")) * 1000
 salary_sacrifice = float(input("What percentage of that do you salary sacrifice? (%): "))
+hecs_debt = bool(input("Do you have a HECS Debt? (true/false): "))
 
 bills = float(input("Monthly cost on bills (e.g. rent/mortgage, utility bills, rates etc) ($): ")) * 12
 necessities = float(input("Estimated monthly cost on general necessities (e.g. groceries, hygiene products, doctor/dentist appointments, etc) ($): ")) * 12
@@ -63,27 +64,75 @@ else: # Over $180,000
 
 
 
+if hecs_debt:
+	if annual_salary <= 48360: # Up to 48,360
+		hecs_repayment = 0
+	elif annual_salary <= 55836: # Up to 55,836
+		hecs_repayment = 0.01
+	elif annual_salary <= 59186: # Up to 59,186
+		hecs_repayment = 0.02
+	elif annual_salary <= 62738: # Up to 62,738
+		hecs_repayment = 0.025
+	elif annual_salary <= 66502: # Up to 66,502
+		hecs_repayment = 0.03
+	elif annual_salary <= 70492: # Up to 70,492
+		hecs_repayment = 0.035
+	elif annual_salary <= 74722: # Up to 74,722
+		hecs_repayment = 0.04
+	elif annual_salary <= 79206: # Up to 79,206
+		hecs_repayment = 0.045
+	elif annual_salary <= 83958: # Up to 83,958
+		hecs_repayment = 0.05
+	elif annual_salary <= 88996: # Up to 88,996
+		hecs_repayment = 0.055
+	elif annual_salary <= 94336: # Up to 94,336
+		hecs_repayment = 0.06
+	elif annual_salary <= 99996: # Up to 99,996
+		hecs_repayment = 0.065
+	elif annual_salary <= 105996: # Up to 105,996
+		hecs_repayment = 0.07
+	elif annual_salary <= 112335: # Up to 112,335
+		hecs_repayment = 0.075
+	elif annual_salary <= 119097: # Up to 119,097
+		hecs_repayment = 0.08
+	elif annual_salary <= 126243: # Up to 126,243
+		hecs_repayment = 0.085
+	elif annual_salary <= 133818: # Up to 133,818
+		hecs_repayment = 0.09
+	elif annual_salary <= 141847: # Up to 141,847
+		hecs_repayment = 0.095
+	else: # Above 141,847
+		hecs_repayment = 0.1
+else:
+	hecs_repayment = 0
+
+
+
 def print_report():
 
 	cls() # Clear the screen
 
-	print('\n')
 	print('============================================================')
-	print(f'ANNUAL LIFE RECEIPT - Annual salary: ${annual_salary}')
-	print('============================================================')
-	# print(f'Gross annual salary: ${annual_salary}')
 	print('\n')
+	print(f'Gross annual salary: ${annual_salary}')
 	print(f'Salary sacrifice: {salary_sacrifice}% (-${annual_salary - taxable_income})')
 	print(f'Taxable income: ${taxable_income}')
-	print(f'Tax: -${tax}')
 	print('\n')
-	print(f'Leaving you with ${taxable_income - tax}')
+	print(f'Income tax: -${tax}')
+	
+	if hecs_debt:
+		print(f'HECS Repayment: {hecs_repayment * 100}% (-${hecs_repayment * annual_salary})')
+		print('\n')
+		print(f'Total going to ATO: -${tax + (hecs_repayment * annual_salary)})')
+
+	
+	print(f'Leaving you with ${taxable_income - tax - (hecs_repayment * annual_salary)}')
 	print('\n')
 	print(f'Bills: -${bills}')
 	print(f'General necessities: -${necessities}')
 	print(f'Luxuries: -${luxuries}')
 	print('\n')
-	print(f'Leaving you with ${taxable_income - tax - bills - necessities - luxuries}')
+	print(f'Leaving you with ${taxable_income - tax - bills - necessities - luxuries - (hecs_repayment * annual_salary)}')
 	print('\n')
 	print('============================================================')
 	print('\n')
