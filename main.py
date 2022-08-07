@@ -6,87 +6,42 @@ def cls():
 
 cls() # Clear the screen
 
-while True:
-	try:
-		annual_salary = float(input("Your annual salary (e.g. \"50\" = $50,000 or \"60.53\" = $60,530): ")) * 1000
-	except ValueError:
-		print('Sorry, I didn\'t quite understand that. Please review the data type you used.')
-		continue
-	else:
-		break
 
+def input_val_loop(data_type: type, prompt: str):
+	while True:
+		try:
+			if data_type == int:
+				return int(input(prompt))
+			elif data_type == float:
+				return float(input(prompt))
+			elif data_type == bool:
+				return bool(input(prompt))
+			elif data_type == str:
+				return str(input(prompt))
+			else:
+				raise ValueError('Invalid input type.')
+		except ValueError:
+			print('Please check the data type you used.')
+			continue
+
+
+annual_salary = input_val_loop(float, 'Your annual salary (e.g. "50" = $50,000 or "60.53" = $60,530): ') * 1000
 
 if annual_salary > 90000:
 	# Asked for the Medicare Levy Surcharge
-	while True:
-		try:
-			private_health_cover = bool(input("Do you have private health cover? (true/false): "))
-		except ValueError:
-			print('Sorry, I didn\'t quite understand that. Please review the data type you used.')
-			continue
-		else:
-			break
+	private_health_cover = input_val_loop(bool, 'Do you have private health cover? (true/false): ')
 
-while True:
-	try:
-		salary_sacrifice = float(input("What percentage of that do you salary sacrifice? (%): "))
-	except ValueError:
-		print('Sorry, I didn\'t quite understand that. Please review the data type you used.')
-		continue
-	else:
-		break
-
-while True:
-	try:
-		hecs_debt = bool(input("Do you have a HECS/FEE-Help debt? (true/false): "))
-	except ValueError:
-		print('Sorry, I didn\'t quite understand that. Please review the data type you used.')
-		continue
-	else:
-		break
-
-
-# Are you a senior or pensioner? (true/false):
-# Were you eligible for the seniors and pensioners tax offset (SAPTO)? (true/false):
-sapto = False
-
-# Do you have a spouse (married or de facto)? (true/false):
-#  Did you have a spouse (married or de facto) on 30 June of the selected income year?
-single = True
-
-# Number of dependants:
-dependants_count = 0
-
-# Monthly cost on bills?
-while True:
-	try:
-		bills = float(input("Monthly cost on bills (e.g. rent/mortgage, utility bills, rates etc) ($): ")) * 12
-	except ValueError:
-		print('Sorry, I didn\'t quite understand that. Please review the data type you used.')
-		continue
-	else:
-		break
-
-# Monthly cost on general necessities?
-while True:
-	try:
-		necessities = float(input("Estimated monthly cost on general necessities (e.g. groceries, hygiene products, doctor/dentist appointments, etc) ($): ")) * 12
-	except ValueError:
-		print('Sorry, I didn\'t quite understand that. Please review the data type you used.')
-		continue
-	else:
-		break
-
-# Monthly cost on luxuries?
-while True:
-	try:
-		luxuries = float(input("Estimated monthly cost on luxuries (e.g. streaming subscriptions, eating out, etc) ($): ")) * 12
-	except ValueError:
-		print('Sorry, I didn\'t quite understand that. Please review the data type you used.')
-		continue
-	else:
-		break
-
+salary_sacrifice = input_val_loop(float, "What percentage of that do you salary sacrifice? (%): ")
+hecs_debt = input_val_loop(bool, "Do you have a HECS/FEE-Help debt? (true/false): ")
+sapto = False # Were you eligible for the seniors and pensioners tax offset (SAPTO)? (true/false):
+single = True # Do you have a spouse (married or de facto)? (true/false):
+dependants = 0 # Number of dependants:
+# Monthly cost on bills
+bills = input_val_loop(float, "Monthly cost on bills (e.g. rent/mortgage, utility bills, rates etc) ($): ") * 12
+# Monthly cost on general necessities
+necessities = input_val_loop(float, "Estimated monthly cost on general necessities (e.g. groceries, hygiene products, doctor/dentist appointments, etc) ($): ") * 12
+# Monthly cost on luxuries
+luxuries = input_val_loop(float, "Estimated monthly cost on luxuries (e.g. streaming subscriptions, eating out, etc) ($): ") * 12
 
 taxable_income = annual_salary * (1 - salary_sacrifice / 100)
 
