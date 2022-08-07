@@ -6,31 +6,86 @@ def cls():
 
 cls() # Clear the screen
 
-annual_salary = float(input("Your annual salary (e.g. \"50\" = $50,000): ")) * 1000
+while True:
+	try:
+		annual_salary = float(input("Your annual salary (e.g. \"50\" = $50,000 or \"60.53\" = $60,530): ")) * 1000
+	except ValueError:
+		print('Sorry, I didn\'t quite understand that. Please review the data type you used.')
+		continue
+	else:
+		break
+
 
 if annual_salary > 90000:
 	# Asked for the Medicare Levy Surcharge
-	private_health_cover = bool(input("Do you have private health cover? (y/n): "))
+	while True:
+		try:
+			private_health_cover = bool(input("Do you have private health cover? (true/false): "))
+		except ValueError:
+			print('Sorry, I didn\'t quite understand that. Please review the data type you used.')
+			continue
+		else:
+			break
 
-salary_sacrifice = float(input("What percentage of that do you salary sacrifice? (%): "))
-hecs_debt = bool(input("Do you have a HECS/FEE-Help debt? (true/false): "))
+while True:
+	try:
+		salary_sacrifice = float(input("What percentage of that do you salary sacrifice? (%): "))
+	except ValueError:
+		print('Sorry, I didn\'t quite understand that. Please review the data type you used.')
+		continue
+	else:
+		break
 
-# Are you a senior or pensioner? (y/n):
-# Were you eligible for the seniors and pensioners tax offset (SAPTO)? (y/n):
+while True:
+	try:
+		hecs_debt = bool(input("Do you have a HECS/FEE-Help debt? (true/false): "))
+	except ValueError:
+		print('Sorry, I didn\'t quite understand that. Please review the data type you used.')
+		continue
+	else:
+		break
+
+
+# Are you a senior or pensioner? (true/false):
+# Were you eligible for the seniors and pensioners tax offset (SAPTO)? (true/false):
 sapto = False
 
-# Do you have a spouse (married or de facto)? (y/n):
+# Do you have a spouse (married or de facto)? (true/false):
 #  Did you have a spouse (married or de facto) on 30 June of the selected income year?
 single = True
 
 # Number of dependants:
 dependants_count = 0
 
+# Monthly cost on bills?
+while True:
+	try:
+		bills = float(input("Monthly cost on bills (e.g. rent/mortgage, utility bills, rates etc) ($): ")) * 12
+	except ValueError:
+		print('Sorry, I didn\'t quite understand that. Please review the data type you used.')
+		continue
+	else:
+		break
 
-bills = float(input("Monthly cost on bills (e.g. rent/mortgage, utility bills, rates etc) ($): ")) * 12
-necessities = float(input("Estimated monthly cost on general necessities (e.g. groceries, hygiene products, doctor/dentist appointments, etc) ($): ")) * 12
-luxuries = float(input("Estimated monthly cost on luxuries (e.g. streaming subscriptions, eating out, etc) ($): ")) * 12
+# Monthly cost on general necessities?
+while True:
+	try:
+		necessities = float(input("Estimated monthly cost on general necessities (e.g. groceries, hygiene products, doctor/dentist appointments, etc) ($): ")) * 12
+	except ValueError:
+		print('Sorry, I didn\'t quite understand that. Please review the data type you used.')
+		continue
+	else:
+		break
 
+# Monthly cost on luxuries?
+while True:
+	try:
+		luxuries = float(input("Estimated monthly cost on luxuries (e.g. streaming subscriptions, eating out, etc) ($): ")) * 12
+	except ValueError:
+		print('Sorry, I didn\'t quite understand that. Please review the data type you used.')
+		continue
+	else:
+		break
 
 
 taxable_income = annual_salary * (1 - salary_sacrifice / 100)
