@@ -1,6 +1,6 @@
 # Personal Finance Calculator
 
-Calculator for personal fincances. Calculations only accurate to Victoria, Australia.
+Calculator for personal fincances. Calculations are only accurate to tax residents of Victoria, Australia.
 
 ## Usage
 
