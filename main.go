@@ -2,18 +2,26 @@ package main
 
 import (
 	"fmt"
+	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/tobyscott25/eofy-calc/helpers"
 )
 
 func main() {
+
 	fmt.Println("Welcome to EOFY Calculator!")
 
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Println("Hint: You can create a .env file to auto-answer these questions!")
+	}
+
 	// Retreive required details
-	salary := helpers.IntInputLoop("What is your annual salary? (eg. 55000 = $55,000): ")
-	salarySacrificePercentage := helpers.IntInputLoop("How much are you salary sacrificing? (eg. 10 = 10%): ")
-	hasHelpDebt := helpers.BoolInputLoop("Do you have a HELP/HECS debt? (true/false): ")
-	hasPrivateHealthCover := helpers.BoolInputLoop("Do you have private health cover? (true/false): ") // For Medicare Levy Surcharge
+	salary := helpers.IntInputLoop("What is your annual salary? (eg. 65000 = $65,000): ", os.Getenv("PFC_GROSS_SALARY"))
+	salarySacrificePercentage := helpers.IntInputLoop("How much are you salary sacrificing? (eg. 10 = 10%): ", os.Getenv("PFC_SALARY_SACRIFICE_PERCENTAGE"))
+	hasHelpDebt := helpers.BoolInputLoop("Do you have a HELP/HECS debt? (true/false): ", os.Getenv("PFC_HAS_HELP_DEBT"))
+	hasPrivateHealthCover := helpers.BoolInputLoop("Do you have private health cover? (true/false): ", os.Getenv("PFC_HAS_PRIVATE_HEALTH_COVER")) // For Medicare Levy Surcharge
 
 	// Hard-coded values, yet to take user input for these
 	single := true // Does not have a spouse (married or de facto)
