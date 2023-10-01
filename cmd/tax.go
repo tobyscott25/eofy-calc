@@ -32,6 +32,18 @@ var CmdCalculateTax = &cobra.Command{
 				Name:   "HasPrivHealthCover",
 				Prompt: &survey.Confirm{Message: "Do you have private health insurance?", Default: os.Getenv("PFC_HAS_PRIVATE_HEALTH_COVER") == "true"},
 			},
+			{
+				Name:   "Single",
+				Prompt: &survey.Confirm{Message: "Are you single? (not married or in a de facto relationship)", Default: os.Getenv("PFC_SINGLE") == "true"},
+			},
+			{
+				Name:   "NumberOfDependants",
+				Prompt: &survey.Input{Message: "How many dependants do you have?", Default: os.Getenv("PFC_NUMBER_OF_DEPENDANTS")},
+			},
+			{
+				Name:   "SaptoEligible",
+				Prompt: &survey.Confirm{Message: "Are you eligible for the seniors and pensioners tax offset (SAPTO)?", Default: os.Getenv("PFC_SAPTO_ELIGIBLE") == "true"},
+			},
 		}
 
 		answers := struct {
@@ -39,6 +51,9 @@ var CmdCalculateTax = &cobra.Command{
 			SalarySacrificePercent int
 			HasHecsHelpDebt        bool
 			HasPrivHealthCover     bool
+			Single                 bool // Does not have a spouse (married or de facto)
+			NumberOfDependants     int
+			SaptoEligible          bool // Are you eligible for the seniors and pensioners tax offset (SAPTO)?
 		}{}
 
 		err := survey.Ask(questions, &answers)
@@ -47,19 +62,14 @@ var CmdCalculateTax = &cobra.Command{
 			return
 		}
 
-		// Hard-coded values, yet to take user input for these
-		single := true // Does not have a spouse (married or de facto)
-		// numberOfDependants := 0
-		// saptoEligible := false // Were you eligible for the seniors and pensioners tax offset (SAPTO)?
-
 		// Run calculations
 		salarySacrificeAmount := answers.GrossAnnualSalary * answers.SalarySacrificePercent / 100
 		taxableIncome := helpers.CalcTaxableIncome(answers.GrossAnnualSalary, answers.SalarySacrificePercent)
 		incomeTax := helpers.CalcIncomeTax(float64(taxableIncome))
 		hecsRepaymentRate := helpers.CalcHecsHelpRepaymentRate(answers.GrossAnnualSalary) // Repayment rate is based on your gross salary, not taxable income.
 		hecsRepaymentAmount := float64(answers.GrossAnnualSalary) * hecsRepaymentRate
-		paysMedicareLevySurcharge := helpers.PaysMedicareLevySurcharge(float64(taxableIncome), single, answers.HasPrivHealthCover)
-		medicareLevy := helpers.CalcMedicareLevy(float64(taxableIncome), single, paysMedicareLevySurcharge)
+		paysMedicareLevySurcharge := helpers.PaysMedicareLevySurcharge(float64(taxableIncome), answers.Single, answers.HasPrivHealthCover)
+		medicareLevy := helpers.CalcMedicareLevy(float64(taxableIncome), answers.Single, paysMedicareLevySurcharge)
 
 		// Print out report
 		fmt.Println("=====================================")
