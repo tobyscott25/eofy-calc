@@ -73,19 +73,19 @@ var CmdCalculateTax = &cobra.Command{
 
 		// Print out report
 		fmt.Println("=====================================")
-		fmt.Printf("Your gross annual salary is $%d\n", answers.GrossAnnualSalary)
-		fmt.Printf("You are salary sacrificing $%d (%d%%)\n", salarySacrificeAmount, answers.SalarySacrificePercent)
-		fmt.Printf("Your taxable income is $%d\n", taxableIncome)
+		fmt.Printf("Your gross annual salary is %s\n", helpers.FormatAsCurrency(float64(answers.GrossAnnualSalary)))
+		fmt.Printf("You are salary sacrificing %s (%d%%)\n", helpers.FormatAsCurrency(float64(salarySacrificeAmount)), answers.SalarySacrificePercent)
+		fmt.Printf("Your taxable income is %s\n", helpers.FormatAsCurrency(float64(taxableIncome)))
 		fmt.Println("=====================================")
-		fmt.Printf("Your income tax is $%.2f\n", incomeTax)
-		fmt.Printf("Your medicare levy is $%.2f\n", medicareLevy)
+		fmt.Printf("Your income tax is %s\n", helpers.FormatAsCurrency(float64(incomeTax)))
+		fmt.Printf("Your medicare levy is %s\n", helpers.FormatAsCurrency(float64(medicareLevy)))
 		if answers.HasHecsHelpDebt {
-			fmt.Printf("You have a HELP/HECS debt, your HECS repayment is $%.2f (%.2f%% of $%d)\n", hecsRepaymentAmount, (hecsRepaymentRate * 100), answers.GrossAnnualSalary)
+			fmt.Printf("You have a HELP/HECS debt, your HECS repayment is %s (%s%% of %s)\n", helpers.FormatAsCurrency(float64(hecsRepaymentAmount)), (helpers.FormatAsCurrency(float64(hecsRepaymentRate * 100))), helpers.FormatAsCurrency(float64(answers.GrossAnnualSalary)))
 		}
 		fmt.Println("=====================================")
-		fmt.Printf("Total going to the ATO: $%.2f\n", (incomeTax + medicareLevy + hecsRepaymentAmount))
-		fmt.Printf("Salary sacrifice amount: $%d\n", salarySacrificeAmount)
-		fmt.Printf("Total take home pay: $%.2f\n", (float64(answers.GrossAnnualSalary) - (incomeTax + medicareLevy + hecsRepaymentAmount) - float64(salarySacrificeAmount)))
+		fmt.Printf("Total going to the ATO: %s\n", helpers.FormatAsCurrency(float64(incomeTax+medicareLevy+hecsRepaymentAmount)))
+		fmt.Printf("Salary sacrifice amount: %s\n", helpers.FormatAsCurrency(float64(salarySacrificeAmount)))
+		fmt.Printf("Total take home pay: %s\n", helpers.FormatAsCurrency(float64(float64(answers.GrossAnnualSalary)-(incomeTax+medicareLevy+hecsRepaymentAmount)-float64(salarySacrificeAmount))))
 		fmt.Println("=====================================")
 	},
 }
