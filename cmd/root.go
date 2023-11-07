@@ -16,6 +16,7 @@ var rootCmd = &cobra.Command{
 func StartPFC() {
 
 	rootCmd.AddCommand(CmdCalculateTax)
+	rootCmd.AddCommand(CmdFirstHomeCalculator)
 
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)

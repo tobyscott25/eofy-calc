@@ -4,6 +4,14 @@ Calculator for personal fincances. Calculations are only accurate to tax residen
 
 ## Usage
 
+```bash
+# Calculate income tax
+go run main.go tax
+
+# Calculate first home options
+go run main.go firsthome
+```
+
 You can create a `.env` file to skip having to enter your details every time you run the calculator.
 
 ```bash
@@ -12,10 +20,6 @@ vim .env
 ```
 
 Start the calculator with the following command:
-
-```bash
-go run main.go
-```
 
 ## Features
 
@@ -29,6 +33,5 @@ go run main.go
 
 - Use tax rates (etc) from CSV files so they aren't hard-coded.
 - Take region into account for tax rates, etc.
-- Calculate first-home buyer schemes.
 - Take private health cover into account for Medicare Levy Surcharge for salaries over $90k.
 - Allow for one "profile" to calculate multiple income streams.
